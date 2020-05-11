@@ -1,15 +1,27 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Loign from '@/components/Login'
-
+//导入组件
+import login from '@/components/Login'
+import pwdLogin from '@/components/pwdLogin'
+import index from '@/components/index'
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: 'Login',
-      name: '登录',
-      component:Loign,
-    }
+      path: '/login',
+      component: login,
+      title:"登录"
+    },
+    {
+      path: '/pwdLogin',
+      component: pwdLogin,
+      title:"密码登录"
+    },
+    {
+      path: '/index',
+      component: index,
+      title:"首页"
+    },
   ]
 })

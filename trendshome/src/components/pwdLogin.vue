@@ -28,8 +28,8 @@
                 <br />
 
                 <el-row class="font1">
-                  <el-col :span="15">短信验证码
-                  <el-input  placeholder="请输入短信验证码" v-model="code" :span="4"></el-input>
+                  <el-col :span="15">密码
+                  <el-input  placeholder="请输入密码" v-model="code" :span="4" show-password></el-input>
                   </el-col>
                 </el-row>
 
@@ -39,7 +39,11 @@
                   </el-col>
 
                   <el-col :span="7" :offset="1">
-                    <a href="#" @click.prevent="codeDemo">发送验证码</a>
+                    <el-checkbox v-model="checked">记住我</el-checkbox>
+                  </el-col>
+
+                  <el-col :span="7" :offset="1">
+                    <a href="#">忘记密码?</a>
                   </el-col>
                 </el-row>
 
@@ -55,7 +59,7 @@
                 <el-row>
                   <el-col :span="15">
                     <br>
-                    <router-link to="/pwdLogin">密码登录</router-link>
+                    <router-link to="/login">验证码登录</router-link>
                   </el-col>
                 </el-row>
               </el-col>
@@ -104,7 +108,7 @@
                    <el-row>
                      <el-col :span="15" offset="4">手机号码</el-col>
                      <br><br>
-                     <el-col :span="12" offset="4"><el-input v-model="account.phone" placeholder=""></el-input></el-col>
+                     <el-col :span="12" offset="4"><el-input v-model="account.phone" placeholder="" @blur="findphone"></el-input></el-col>
                      <br><br>
                      <span style="color: red;">{{msg1}}</span>
                    </el-row>
@@ -200,6 +204,9 @@ export default {
     components: {},
 
     methods: {
+      findphone(){
+          alert("s");
+      },
       send() {
         //判断手机号码是否为空
             if(this.account.phone==""||this.account.phone==undefined||this.account.phone.length<11){
