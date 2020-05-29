@@ -1,61 +1,83 @@
 <template>
-  <div class>
-    
-    <el-row>
-      <el-col :span="8" :offset="8">
-        <h1>登录</h1>
-      </el-col>
-    </el-row>
-    <el-row class="font1">
-      <el-col :span="2" :offset="4" >用户名</el-col>
-      <el-col :span="8">
-        <el-input v-model="uname" placeholder></el-input>
-      </el-col>
-    </el-row>
-    <el-row class="font1">
-      <el-col :span="2" :offset="4" >密码</el-col>
-      <el-col :span="8">
-        <el-input @keyup.enter.native="login" v-model="upwd" placeholder show-password></el-input>
-      </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="8" :offset="6">
-        <el-button @click="login">登录</el-button>
-      </el-col>
-    </el-row>
-  </div>
+  <body id="poster">
+    <el-form class="login-container" label-position="left"
+             label-width="0px">
+      <h3 class="login_title">系统登录</h3>
+      <el-form-item>
+        <el-input type="text" v-model="loginForm.adminname"
+                  auto-complete="off" placeholder="账号"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-input type="password" v-model="loginForm.password"
+                  auto-complete="off" placeholder="密码"></el-input>
+      </el-form-item>
+      <el-form-item style="width: 100%">
+        <el-button type="primary" style="width: 100%;background: #191970;border: none" v-on:click="login">登录</el-button>
+      </el-form-item>
+    </el-form>
+  </body>
 </template>
 
 <script>
-export default {
-  name: "",
-  data() {
-    return {
-        uname:'',
-        upwd:'',
-    };
-  },
-  components: {},
-  methods: {
-    login() {
-        let url="login/loing";
-        let params=new URLSearchParams;
-        params.append("uname",this.uname);
-        params.append("upwd",this.upwd)
-        this.$http.post(url,params).then(Response=>{
-            console.log(Response)
-            this.$store.dispatch("change", "Index");
-            this.$store.dispatch("login", Response.data);
-        }).catch(ex=>{});
+
+  export default {
+    name: 'Login',
+    data () {
+      return {
+        loginForm: {
+          adminname: '',
+          password: ''
+        },
+        responseResult: []
+      }
+    },
+    methods: {
+      login () {
+        this.$http
+          .post('/login', {
+            adminname: this.loginForm.adminname,
+            password: this.loginForm.password
+          })
+          .then(successResponse => {
+            if (successResponse.data.code === 200) {
+              // this.$router.replace({path: '/Index'})
+            this.$store.dispatch("change","Index");
+                this.$store.dispatch("login",response.data);
+            }
+          })
+          .catch(failResponse => {
+          })
+      }
     }
   }
-};
 </script>
 
-<style  scoped>
-.font1{
-    line-height:40px;
-    text-align: right;
-    padding-right: 10px;
-}
+<style>
+  #poster {
+    background:url("../assets/logo.jpg");
+    background-position: center;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    position: fixed;
+  }
+  body{
+    margin: 0px;
+  }
+  .login-container {
+    border-radius: 15px;
+    background-clip: padding-box;
+    margin: 90px auto;
+    width: 350px;
+    padding: 35px 35px 15px 35px;
+    background: #fff;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 0 25px #cac6c6;
+  }
+  .login_title {
+    margin: 0px auto 40px auto;
+    text-align: center;
+    color: #505458;
+  }
+
 </style>

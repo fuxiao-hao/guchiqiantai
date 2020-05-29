@@ -9,25 +9,21 @@
       </el-header>
       <el-container>
         <el-aside width="200px">
-          <ul v-for="route in this.$router.options.routes" :key="route">
-            <li>
-              <router-link :to="route.path">{{route.name}}</router-link>
-            </li>
-          </ul>
           <el-menu
       default-active="2"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
+     
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
       router>
+ <!-- @open="handleOpen"
+      @close="handleClose" -->
       <el-menu-item v-for="route in this.$router.options.routes" 
       :key="route.path"
       :index="route.path">
         <i class="el-icon-setting"></i>
-        <span slot="title" :to="route.path">{{route.name}}</span>
+        <span slot="title" :to="route.path">{{route.title}}</span>
       </el-menu-item></el-menu>
         </el-aside>
         <el-main>
@@ -56,9 +52,20 @@ export default {
     //     console.log(Response.data)
     //   }).
     // }
+    // login() {
+    //     let url="login/loing";
+    //     let params=new URLSearchParams;
+    //     params.append("uname",this.uname);
+    //     params.append("upwd",this.upwd)
+    //     this.$http.post(url,params).then(Response=>{
+    //         console.log(Response)
+    //         this.$store.dispatch("change", "Index");
+    //         this.$store.dispatch("login", Response.data);
+    //     }).catch(ex=>{});
+    // }
 }
 </script>
-<style>
+<style scope>
 .el-header,
 .el-footer {
   background-color: #b3c0d1;
@@ -87,4 +94,3 @@ export default {
   text-align: left;
 }
 </style>
-
